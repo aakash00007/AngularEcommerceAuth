@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import "node_modules/primeng/resources/themes/lara-light-blue/theme.css";
+@import "node_modules/primeng/resources/primeng.css";
+@import "node_modules/primeflex/primeflex.css";
+@import url(assets/css/common.css);
+
+.body-gradient{
+  background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(211, 214, 248, 0.889) 0.1%, rgba(209, 209, 252, 0.807) 90.1% );
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 24px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:#8a2ee6;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #744be6; 
+}

@@ -1,0 +1,54 @@
+.margin-fix{
+  margin-top: 5rem;
+}
+
+.box-shadow{
+	box-shadow: 0 20px 40px rgb(166, 181, 235);
+	transition: all .3s ease-out;
+}
+
+.box-shadow:hover{
+	box-shadow: 0 20px 40px rgb(122, 148, 236);
+	transform: scale3d(1.2,1.2,1.2);
+}
+
+.card{
+	border-radius: 25px;
+}
+
+.card img{
+	border-top-left-radius: 25px;
+	border-top-right-radius: 25px;
+  position: relative;
+}
+.item-table{
+	border: none;
+	box-shadow: 0 20px 40px rgb(166, 181, 235);
+	border-radius: 20px;
+	transition: all .2s ease-out;
+}
+.item-table img{
+	border-radius: 0;
+}
+// .item-table:hover{
+// 	transform:translateY(10px);
+// }
+.category-badge{
+	background-color: rgb(154, 245, 219);
+	border-radius: 50px;
+}
+.cat-badge{
+  position: absolute;
+	background-color: rgb(174, 252, 234);
+  bottom: 228px;
+  right: 6px
+}
+
+td{
+	vertical-align: middle;
+}
+
+::ng-deep .p-dropdown-items-wrapper > ul{
+	padding: 0;
+}
+

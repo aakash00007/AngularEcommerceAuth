@@ -1,0 +1,170 @@
+<app-header></app-header>
+
+<ng-container *ngIf="!isTimezoneSelected && role== 'Admin'">
+  <div class="card flex justify-content-center">
+    <p-dialog
+      header="Select TimeZone"
+      class="mx-auto"
+      [(visible)]="visible"
+      [style]="{ width: '50vw' }"
+    >
+      <div class="flex py-2 justify-content-center">
+        <div class="card flex justify-content-center">
+          <p-dropdown
+            class="mx-auto"
+            appendTo="body"
+            [options]="timeZones"
+            [(ngModel)]="selectedTimeZone"
+            optionLabel="timeZoneName"
+            [showClear]="true"
+            placeholder="Select TimeZone"
+          ></p-dropdown>
+        </div>
+      </div>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        class="p-button-success"
+        (click)="onSave()"
+      ></button>
+    </p-dialog>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="role == 'Admin' && isTimezoneSelected">
+  <div class="container margin-fix p-0">
+    <div class="row p-2">
+      <div class="d-flex justify-content-center">
+        <div class="me-2">
+          <label class="form-label me-2">From Date:</label>
+          <p-calendar
+            [(ngModel)]="fromDate"
+            [showTime]="false"
+            dateFormat="yy-mm-dd"
+            placeholder="Select Date"
+          ></p-calendar>
+        </div>
+        <div class="me-2">
+          <label class="form-label me-2">To Date:</label>
+          <p-calendar
+            [(ngModel)]="toDate"
+            [showTime]="false"
+            dateFormat="yy-mm-dd"
+            placeholder="Select Date"
+          ></p-calendar>
+        </div>
+        <button
+          pButton
+          pRipple
+          label="Search"
+          class="p-button-info"
+          (click)="searchProducts()"
+        ></button>
+      </div>
+    </div>
+    <div class="row p-2">
+      <div class="card p-0 item-table p-3">
+        <table
+          class="col-md-8 col-lg-8 col-sm-6 table table-hover align-items-center my-3"
+        >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Category</th>
+              <th>Image</th>
+              <th>Created On</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of products">
+              <td>{{ item.productName }}</td>
+              <td>{{ item.description }}</td>
+              <td>{{ item.price }}/-</td>
+              <td>{{ item.quantity }}</td>
+              <td>
+                <span class="category-badge py-1 px-2 fs-6">{{
+                  item.category.categoryName
+                }}</span>
+              </td>
+              <td>
+                <img
+                  src="{{ getRelativeImageUrl(item.imageUrl) }}"
+                  alt=""
+                  style="height: 50px; width: 50px"
+                />
+              </td>
+              <td>{{ item.createdOn }}</td>
+              <td>
+                <button
+                  class="btn btn-info me-2"
+                  (click)="openEditModal(item.productId)"
+                >
+                  <i
+                    class="fa-solid fa-pen-to-square"
+                    style="font-size: 20px; padding: 0"
+                  ></i>
+                </button>
+                <button
+                  class="btn btn-danger me-2"
+                  data-bs-toggle="modal"
+                  data-bs-target="#myModal"
+                  #modalBtn
+                  value="{{ item.productId }}"
+                  (click)="passId(modalBtn.value)"
+                >
+                  <i
+                    class="fa-solid fa-trash"
+                    style="font-size: 20px; padding: 0"
+                  ></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="role == 'User'">
+  <div class="container margin-fix">
+    <div class="row justify-content-center">
+      <div
+        *ngFor="let item of products"
+        class="card box-shadow col-sm-5 col-md-4 col-lg-4 m-5 p-0"
+        style="width: 18rem"
+      >
+        <img
+          src="{{ getRelativeImageUrl(item.imageUrl) }}"
+          class="card-img-top"
+          alt="..."
+          style="height: 15rem"
+        />
+        <span
+          class="badge rounded-pill text-dark cat-badge"
+          style="padding: 8px 14px"
+          >{{ item.category.categoryName }}</span
+        >
+        <div class="card-body">
+          <h5 class="card-title">{{ item.productName }}</h5>
+          <p class="card-text">{{ item.description }}</p>
+          <p class="card-text">
+            <strong>{{ item.price }}/-</strong>
+          </p>
+          <p class="card-text">
+            <strong>Quantity: </strong>{{ item.quantity }}
+          </p>
+
+          <a href="#" class="btn btn-primary">Buy Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<app-delete-modal [productId]="currProductId"></app-delete-modal>

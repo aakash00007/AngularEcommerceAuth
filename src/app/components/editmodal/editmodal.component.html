@@ -1,0 +1,136 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Edit Product</h4>
+  <button
+    type="button"
+    class="btn-close close pull-right"
+    aria-label="Close"
+    (click)="bsModalRef.hide()"
+  >
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="row justify-content-center">
+  <form [formGroup]="editProductForm" (ngSubmit)="editItem()">
+    <div class="modal-body">
+      <div class="mb-3 form-outline">
+        <label class="form-label">Product Name</label>
+        <input type="text" formControlName="productName" class="form-control" />
+        <small
+          class="text-danger"
+          *ngIf="
+            editProductForm.controls['productName'].dirty &&
+            editProductForm.hasError('required', 'productName')
+          "
+          >*Product Name is required</small
+        >
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Product Description</label>
+        <input type="text" formControlName="description" class="form-control" />
+        <small
+          class="text-danger"
+          *ngIf="
+            editProductForm.controls['description'].dirty &&
+            editProductForm.hasError('required', 'description')
+          "
+          >*Description is required</small
+        >
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Upload Image</label>
+        <p-fileUpload
+          [customUpload]="true"
+          name="image"
+          (uploadHandler)="onFileUpload($event)"
+          [auto]="true"
+          (onRemove)="onFileUpload($event)"
+          [maxFileSize]="1000000"
+          accept="image/*"
+          chooseLabel="Choose"
+          [showCancelButton]="false"
+          [showUploadButton]="false"
+          [multiple]="false"
+        ></p-fileUpload>
+        <small class="text-danger" *ngIf="editProductForm.get('image')?.dirty && editProductForm.get('image')?.errors?.['required']">
+          *Image is required
+        </small>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Product Price</label>
+        <input type="number" formControlName="price" class="form-control" />
+        <small
+          class="text-danger"
+          *ngIf="
+            editProductForm.controls['price'].dirty &&
+            editProductForm.hasError('required', 'price')
+          "
+          >*Price is required</small
+        >
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Product Quantity</label>
+        <input type="number" formControlName="quantity" class="form-control" />
+        <small
+          class="text-danger"
+          *ngIf="
+            editProductForm.controls['quantity'].dirty &&
+            editProductForm.hasError('required', 'quantity')
+          "
+          >*Quantity is required</small
+        >
+      </div>
+      <div class="mb-3 d-flex flex-column">
+        <label class="form-label">Listing Date:</label>
+        <p-calendar
+          formControlName="createdOn"
+          [showTime]="true"
+          dateFormat="yy-mm-dd"
+          placeholder="Select Date"
+        ></p-calendar>
+        <small
+          class="text-danger"
+          *ngIf="
+            editProductForm.controls['createdOn'].dirty &&
+            editProductForm.hasError('required', 'createdOn')
+          "
+          >*Date is required</small
+        >
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Product Category</label>
+        <select class="form-select" formControlName="categoryId">
+          <option value="" selected>Select Category</option>
+          <option *ngFor="let item of categories" value="{{ item.categoryId }}">
+            {{ item.categoryName }}
+          </option>
+        </select>
+        <small
+          class="text-danger"
+          *ngIf="
+            editProductForm.controls['categoryId'].dirty &&
+            editProductForm.hasError('required', 'categoryId')
+          "
+          >*Category is required</small
+        >
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-success mx-2"
+        [attr.data-bs-dismiss]="editProductForm.invalid ? null : 'modal'"
+      >
+        Save
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-bs-dismiss="modal"
+        (click)="bsModalRef.hide()"
+      >
+        Close
+      </button>
+    </div>
+  </form>
+</div>

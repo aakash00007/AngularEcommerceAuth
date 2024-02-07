@@ -1,0 +1,135 @@
+<app-header></app-header>
+
+<div class="container p-3 margin-fix">
+  <div class="row justify-content-center">
+    <div class="card add-form p-4 col-md-6">
+      <form [formGroup]="addProductForm">
+        <div class="mb-3 form-outline">
+          <label class="form-label">Product Name</label>
+          <input
+            type="text"
+            formControlName="productName"
+            class="form-control"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              addProductForm.controls['productName'].dirty &&
+              addProductForm.hasError('required', 'productName')
+            "
+            >*Product Name is required</small
+          >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Product Description</label>
+          <input
+            type="text"
+            formControlName="description"
+            class="form-control"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              addProductForm.controls['description'].dirty &&
+              addProductForm.hasError('required', 'description')
+            "
+            >*Description is required</small
+          >
+        </div>
+        <!-- <div class="mb-3">
+          <label class="form-label"> Image</label>
+          <input type="text" class="form-control" formControlName="imageUrl" />
+        </div> -->
+        <div class="mb-3">
+          <label class="form-label">Upload Image</label>
+          <p-fileUpload
+            [customUpload]="true"
+            name="image"
+            (uploadHandler)="onFileUpload($event)"
+            [maxFileSize]="1000000"
+            accept="image/*"
+            chooseLabel="Choose"
+            [auto]="true"
+            [multiple]="false"
+          ></p-fileUpload>
+          <small
+            class="text-danger"
+            *ngIf="addProductForm.get('image')?.dirty && addProductForm.get('image')?.errors?.['required']"
+          >
+            *Image is required
+          </small>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Product Price</label>
+          <input type="number" formControlName="price" class="form-control" />
+          <small
+            class="text-danger"
+            *ngIf="
+              addProductForm.controls['price'].dirty &&
+              addProductForm.hasError('required', 'price')
+            "
+            >*Price is required</small
+          >
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Product Quantity</label>
+          <input
+            type="number"
+            formControlName="quantity"
+            class="form-control"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              addProductForm.controls['quantity'].dirty &&
+              addProductForm.hasError('required', 'quantity')
+            "
+            >*Quantity is required</small
+          >
+        </div>
+        <div class="mb-3 d-flex flex-column">
+          <label class="form-label">Listing Date:</label>
+          <p-calendar
+            formControlName="createdOn"
+            [showTime]="true"
+            dateFormat="yy-mm-dd"
+            placeholder="Select Date"
+          ></p-calendar>
+          <small
+            class="text-danger"
+            *ngIf="
+              addProductForm.controls['createdOn'].dirty &&
+              addProductForm.hasError('required', 'createdOn')
+            "
+            >*Date is required</small
+          >
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Product Category</label>
+          <select class="form-select" formControlName="categoryId">
+            <option value="" selected>Select Category</option>
+            <option
+              *ngFor="let item of categories"
+              value="{{ item.categoryId }}"
+            >
+              {{ item.categoryName }}
+            </option>
+          </select>
+          <small
+            class="text-danger"
+            *ngIf="
+              addProductForm.controls['categoryId'].dirty &&
+              addProductForm.hasError('required', 'categoryId')
+            "
+            >*Category is required</small
+          >
+        </div>
+        <button class="btn btn-success mx-2" (click)="addProduct()">Add</button>
+        <button routerLink="/dashboard" class="btn btn-danger mx-2">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
